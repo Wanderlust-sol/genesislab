@@ -1,16 +1,16 @@
 import React from "react";
-import DatePicker from "./DatePicker";
+import DatePicker from "Components/DatePicker";
 import DropDown from "Components/DropDown";
 import "./TimeSelector.scss";
 
-const TimeSelector = () => {
+const TimeSelector = ({ title, start, end }) => {
   return (
     <div>
-      <p className="timeselector-title">응시 시작일</p>
+      <p className="timeselector-title">{title}</p>
       <div className="time-sel">
-        <DatePicker />
-        <DropDown data="hours" />
-        <DropDown data="mins" />
+        <DatePicker start={start} end={end} />
+        <DropDown time="hours" start={start} end={end} />
+        <DropDown time="mins" start={start} end={end} />
       </div>
     </div>
   );

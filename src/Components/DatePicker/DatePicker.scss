@@ -1,0 +1,90 @@
+.datepicker {
+  position: relative;
+  margin-top: 7px;
+
+  .dp-input {
+    width: 236px;
+    height: 44px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: solid 1px #dadbdf;
+    margin-right: 16px;
+    position: relative;
+    cursor: pointer;
+
+    &.active {
+      background-color: #efefef;
+    }
+
+    &:hover {
+      background-color: #f9f9f9;
+    }
+
+    .dp-input-title {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .dp-input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      object-fit: contain;
+    }
+  }
+
+  .dp-container {
+    position: absolute;
+    left: 0px;
+    top: 52px;
+    width: 320px;
+    min-height: 346px;
+    border-radius: 8px;
+    box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.16);
+    background-color: #f9f9f9;
+    overflow: hidden;
+    padding: 26px 1px 12px 12px;
+    z-index: 20;
+
+    .dp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .dph-date {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 8px;
+        letter-spacing: 1px;
+      }
+    }
+
+    .arrow-btn-box {
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .arrow-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+}
