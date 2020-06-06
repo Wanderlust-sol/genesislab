@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { setHourValue, setMinValue } from "Redux/Actions";
 import "./DropDown.scss";
 import arrowDropdown from "Img/ic-arrow-drop-down.svg";
 
@@ -6,21 +8,52 @@ const hourArr = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const minArr = [0, 10, 20, 30, 40, 50];
 
 const DropDown = (props) => {
-  const { data } = props;
+  const {
+    time,
+    start,
+    end,
+    startTime,
+    endTime,
+    setHourValue,
+    setMinValue,
+  } = props;
   const [showList, setShowList] = useState(false);
-  const [hourValue, setHourValue] = useState("");
-  const [minValue, setMinValue] = useState("");
+
+  const hourCheck = () => {
+    if (start) return startTime.hour;
+    else if (end) return endTime.hour;
+  };
+
+  const minCheck = () => {
+    if (start) return startTime.min;
+    else if (end) return endTime.min;
+  };
+
+  useEffect(() => {
+    if (sessionStorage.getItem("data")) {
+      const data = JSON.parse(sessionStorage.getItem("data"));
+      if (start) {
+        setHourValue(data.startTime.hour, start, end);
+        setMinValue(data.startTime.min, start, end);
+      }
+      if (end) {
+        setHourValue(data.endTime.hour, start, end);
+        setMinValue(data.endTime.min, start, end);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="dropdown">
       <div
-        className={!showList ? "dropdown-box" : "dropdown-box-active"}
+        className={!showList ? "dropdown-box" : "dropdown-box active"}
         onClick={() => {
           setShowList(!showList);
         }}
       >
         <span className="dropdown-title">
-          {data === "hours" ? hourValue : minValue}
+          {time === "hours" ? hourCheck(start, end) : minCheck(start, end)}
         </span>
         <img
           className="dropdown-icon"
@@ -30,7 +63,7 @@ const DropDown = (props) => {
       </div>
       {showList && (
         <div className="dropdown-contents">
-          {data === "hours" ? (
+          {time === "hours" ? (
             <ul>
               {hourArr.map((hour, index) => {
                 return (
@@ -38,7 +71,7 @@ const DropDown = (props) => {
                     className="option"
                     key={index}
                     onClick={() => {
-                      setHourValue(`오전 ${hour} 시`);
+                      setHourValue(`오전 ${hour} 시`, start, end);
                       setShowList(false);
                     }}
                   >
@@ -52,7 +85,7 @@ const DropDown = (props) => {
                     className="option"
                     key={index}
                     onClick={() => {
-                      setHourValue(`오후 ${hour} 시`);
+                      setHourValue(`오후 ${hour} 시`, start, end);
                       setShowList(false);
                     }}
                   >
@@ -67,7 +100,7 @@ const DropDown = (props) => {
                 return (
                   <li
                     onClick={() => {
-                      setMinValue(`${min} 분`);
+                      setMinValue(`${min} 분`, start, end);
                       setShowList(false);
                     }}
                     key={index}
@@ -84,4 +117,13 @@ const DropDown = (props) => {
   );
 };
 
-export default DropDown;
+const mapStateToProps = (state) => {
+  return {
+    startTime: state.handleTime.startTime,
+    endTime: state.handleTime.endTime,
+  };
+};
+
+export default connect(mapStateToProps, { setHourValue, setMinValue })(
+  DropDown
+);
