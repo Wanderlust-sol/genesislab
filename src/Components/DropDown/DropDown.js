@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { setHourValue, setMinValue } from "Redux/Actions";
+import { setIDX } from "Redux/Actions";
+import { setHourValue, setMinValue } from "Redux/Actions/timeActions";
 import "./DropDown.scss";
 import arrowDropdown from "Img/ic-arrow-drop-down.svg";
 
@@ -16,8 +17,17 @@ const DropDown = (props) => {
     endTime,
     setHourValue,
     setMinValue,
+    index,
+    idx,
+    setIDX,
   } = props;
+
   const [showList, setShowList] = useState(false);
+
+  const handleShowList = () => {
+    setShowList(!showList);
+    setIDX(index);
+  };
 
   const hourCheck = () => {
     if (start) return startTime.hour;
@@ -44,13 +54,16 @@ const DropDown = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    idx === index ? setShowList(true) : setShowList(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx]);
+
   return (
     <div className="dropdown">
       <div
         className={!showList ? "dropdown-box" : "dropdown-box active"}
-        onClick={() => {
-          setShowList(!showList);
-        }}
+        onClick={handleShowList}
       >
         <span className="dropdown-title">
           {time === "hours" ? hourCheck(start, end) : minCheck(start, end)}
@@ -121,9 +134,10 @@ const mapStateToProps = (state) => {
   return {
     startTime: state.handleTime.startTime,
     endTime: state.handleTime.endTime,
+    idx: state.handleSelector.idx,
   };
 };
 
-export default connect(mapStateToProps, { setHourValue, setMinValue })(
+export default connect(mapStateToProps, { setHourValue, setMinValue, setIDX })(
   DropDown
 );

@@ -55,17 +55,17 @@
 
       .dph-date {
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 500;
         margin-left: 8px;
-        letter-spacing: 1px;
       }
     }
 
     .arrow-btn-box {
-      width: 100px;
+      width: 80px;
       display: flex;
       align-items: center;
       justify-content: space-around;
+      margin-right: 8px;
 
       .arrow-btn {
         width: 36px;

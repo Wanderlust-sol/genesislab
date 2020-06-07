@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import "moment/locale/ko";
 import { connect } from "react-redux";
-import { changeDate } from "Redux/Actions";
+import { changeDate } from "Redux/Actions/dateActions";
 import "./Days.scss";
 
 //선택 날짜 활성화 함수

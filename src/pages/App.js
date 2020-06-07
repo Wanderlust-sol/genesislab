@@ -4,18 +4,11 @@ import { connect } from "react-redux";
 import { showModal } from "Redux/Actions";
 import "./App.scss";
 
-const App = (props) => {
-  const { modal, showModal } = props;
-
+const App = ({ modal, showModal }) => {
   return (
     <>
       <div className="App">
-        <div
-          className="popup-button"
-          onClick={() => {
-            showModal();
-          }}
-        >
+        <div className="popup-button" onClick={showModal}>
           <span className="popup-button-title">설정 대화상자 열기</span>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import moment from "moment";
 import "moment/locale/ko";
+import { RESET, SET_HOUR, SET_MIN } from "Redux/Actions/timeActions";
+
 const date = moment().format("LT").split(":");
 const min = (Math.round(date[1] * 0.1) / 10) * 100;
 
@@ -16,7 +18,21 @@ const INITIAL_STATE = {
 
 export default function handleTime(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case "SET_HOUR":
+    case RESET:
+      return {
+        ...state,
+        startTime: {
+          ...state.startTime,
+          hour: `${date[0]} 시`,
+          min: `${min} 분`,
+        },
+        endTime: {
+          ...state.endTime,
+          hour: `${date[0]} 시`,
+          min: `${min} 분`,
+        },
+      };
+    case SET_HOUR:
       if (action.start) {
         return {
           ...state,
@@ -29,7 +45,7 @@ export default function handleTime(state = INITIAL_STATE, action) {
         };
       }
       break;
-    case "SET_MIN":
+    case SET_MIN:
       if (action.start) {
         return {
           ...state,
