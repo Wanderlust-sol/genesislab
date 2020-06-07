@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setDate } from "Redux/Actions";
+import { setDate } from "Redux/Actions/dateActions";
 import arrowBack from "Img/btn-arrow-back.svg";
 import arrowForward from "Img/btn-arrow-forward.svg";
 

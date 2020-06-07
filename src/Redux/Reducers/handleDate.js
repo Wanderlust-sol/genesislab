@@ -1,5 +1,12 @@
 import moment from "moment";
 import "moment/locale/ko";
+import {
+  RESET,
+  SET_DATE,
+  SET_STARTDATE,
+  SET_ENDDATE,
+  CHANGE_DATE,
+} from "Redux/Actions/dateActions";
 
 const INITIAL_STATE = {
   date: moment(),
@@ -9,13 +16,21 @@ const INITIAL_STATE = {
 
 export default function handleDate(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case "SET_DATE":
+    case RESET: {
+      return {
+        ...state,
+        date: moment(),
+        startDate: moment().subtract(0, "day"),
+        endDate: moment().add(0, "day"),
+      };
+    }
+    case SET_DATE:
       return { ...state, date: state.date.month(action.payload).clone() };
-    case "SET_STARTDATE":
+    case SET_STARTDATE:
       return { ...state, startDate: moment(action.payload).clone() };
-    case "SET_ENDDATE":
+    case SET_ENDDATE:
       return { ...state, endDate: moment(action.payload).clone() };
-    case "CHANGE_DATE":
+    case CHANGE_DATE:
       const { startDate } = state;
       if (action.start) {
         const momentFormat = moment().format("L");

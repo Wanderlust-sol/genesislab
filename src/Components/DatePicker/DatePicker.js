@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { setDate, setStartDate, setEndDate } from "Redux/Actions";
+import { setIDX } from "Redux/Actions";
+import { setDate, setStartDate, setEndDate } from "Redux/Actions/dateActions";
 import Head from "./Head";
 import Days from "./Days";
 import arrowDropdown from "Img/ic-arrow-drop-down.svg";
 import "./DatePicker.scss";
 
 const DatePicker = (props) => {
-  const { start, end, startDate, endDate, setStartDate, setEndDate } = props;
-
+  const {
+    start,
+    end,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    index,
+    idx,
+    setIDX,
+  } = props;
   const [showDP, setShowDP] = useState(false);
 
   const showDatePicker = () => {
     setShowDP(!showDP);
+    setIDX(index);
   };
 
   const handleInputTitle = () => {
@@ -27,10 +38,16 @@ const DatePicker = (props) => {
       if (end) return setEndDate(data.endDate);
     }
   };
+
   useEffect(() => {
     getSessionData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    idx === index ? setShowDP(true) : setShowDP(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx]);
 
   return (
     <div className="datepicker">
@@ -57,6 +74,7 @@ const mapStateToProps = (state) => {
     date: state.handleDate.date,
     startDate: state.handleDate.startDate,
     endDate: state.handleDate.endDate,
+    idx: state.handleSelector.idx,
   };
 };
 
@@ -64,4 +82,5 @@ export default connect(mapStateToProps, {
   setDate,
   setStartDate,
   setEndDate,
+  setIDX,
 })(DatePicker);
